@@ -1,3 +1,10 @@
+// OBJECTIVE:
+// Example of Component. Components are essentially objects tied to time.
+// 
+// According to MIXR documentation...
+// "Components provide a common interface for both time-critical and  background tasks, and for passing messages.
+// Any component can be a container for a list of subcomponents and it can be a subcomponent to another container
+// component."
 
 #include <iostream>
 #include <string>

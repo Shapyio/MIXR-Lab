@@ -1,3 +1,6 @@
+// OBJECTIVE: 
+// A simple program to show to cycle of an object from creation to use to deletion.
+// (cout statements mark the current action of the object)
 
 #include <iostream>
 

@@ -1,3 +1,11 @@
+// OBJECTIVE:
+// Creating a generic object, the backbone of MIXR. This example looks at the object SLOTTABLE, 
+// which can be useful to collect information and data during simulations.
+//
+// According to MIXR documentation...
+// Generic class that provides a common type for managing and passing objects, class type, name
+// information, simple garbage collection, copy functions and support for an input(configuration) file parser.
+
 
 #include <iostream>
 #include <string>
@@ -72,7 +80,7 @@ int main(int argc, char* argv[])
    // build my object
    MyObj* myObj{builder(configFilename)};
    // print/dump contents to console
-   myObj->dumpContents();
+   myObj->dumpContents(); 
    // unref/delete
    myObj->unref();
 

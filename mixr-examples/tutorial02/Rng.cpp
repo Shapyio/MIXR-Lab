@@ -4,7 +4,7 @@
 #include <iostream>
 #include <random>
 
-IMPLEMENT_SUBCLASS(Rng, "Rng")
+IMPLEMENT_SUBCLASS(Rng, "Rng") // .cpp IMPLEMENTS a subclass, while .hpp declares (derives methods) from subclass
 EMPTY_SLOTTABLE(Rng)
 
 Rng::Rng()

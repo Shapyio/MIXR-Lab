@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------
 class Rng final: public mixr::base::Object
 {
-   DECLARE_SUBCLASS(Rng, mixr::base::Object)
+   DECLARE_SUBCLASS(Rng, mixr::base::Object) // .hpp declares (derives methods from) a subclass, while .cpp IMPLEMENTS a subclass
 
 public:
    Rng();

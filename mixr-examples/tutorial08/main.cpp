@@ -1,3 +1,7 @@
+// OBJECTIVE:
+// Unclear. It seems only real difference is configuration is done through configs/file0.epp rather than file0.edl as
+// in tutorial07.
+//
 
 #include <string>
 #include <cstdlib>
@@ -89,7 +93,7 @@ int main(int argc, char* argv[])
    glutInit(&argc, argv);
 
    // default configuration filename
-   std::string configFilename = "file0.edl";
+   std::string configFilename = "configs/file0.epp";
 
    // build a display
    glutDisplay = builder(configFilename);

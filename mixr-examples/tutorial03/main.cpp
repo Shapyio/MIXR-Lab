@@ -1,3 +1,5 @@
+// OBJECTIVE:
+// A program to demonstrate Software Design Patterns (Factories, Builders) and introduce SLOTTABLE.
 
 #include <iostream>
 #include <string>
@@ -11,6 +13,9 @@
 #include "Rng.hpp"
 
 // our class factory
+// According to Refactoring.guru
+// "Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, 
+// but allows subclasses to alter the type of objects that will be created."
 mixr::base::Object* factory(const std::string& name)
 {
    mixr::base::Object* obj{};
@@ -26,6 +31,9 @@ mixr::base::Object* factory(const std::string& name)
 }
 
 // random builder
+// According to Refactoring.guru...
+// Builder is a creational design pattern that lets you construct complex objects step by step. 
+// The pattern allows you to produce different types and representations of an object using the same construction code.
 Rng* builder(const std::string& filename)
 {
    // read configuration file

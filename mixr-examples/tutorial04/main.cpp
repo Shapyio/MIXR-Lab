@@ -1,4 +1,5 @@
-
+// OBJECTIVE:
+// A deeper look into OOP & Software Design Patterns using abstraction.
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -19,6 +20,7 @@ mixr::base::Object* factory(const std::string& name)
 {
    mixr::base::Object* obj{};
 
+   // ABSTRACTION is utilized here; all classes are subclasses of AbstractRng
    // look in application's classes
    if ( name == Exponential::getFactoryName() ) {
       obj = new Exponential();

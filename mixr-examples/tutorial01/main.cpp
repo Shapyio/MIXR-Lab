@@ -1,3 +1,5 @@
+// OBJECTIVE: 
+// A simple "Hello World" program introducing MIXR.
 
 #include <iostream>
 
@@ -5,7 +7,8 @@
 
 int main(int argc, char* argv[])
 {
-   const auto str = new mixr::base::String("Hello world\n");
+   // CONST marks unchanging pointer, AUTO marks the type is derived from the created object (mixr::base::String)
+   const auto str = new mixr::base::String("Hello world\n"); // Objects are POINTERS to objects in memory
 
    std::cout << str->getString();
 
@@ -13,7 +16,7 @@ int main(int argc, char* argv[])
 
    std::cout << str->getString();
 
-   str->unref();
+   str->unref(); // Ref/Unref increments/decrements reference counter, if ref counter == 0, deletes the object.
 
    return 0;
 }
