@@ -65,6 +65,22 @@ call ..\makedefs.cmd
 
 This script provides shared macro definitions and environment variable setups required by `make-edl.cmd`.
 
+### 6. Export as Template
+
+For convienent use, create a Visual Studio Template out of the project. 
+
+At the top, in Visual Studio, go to: 
+
+####   ➤ **Project > Export Template...**
+ - Select Project template
+ - Choose `templateProject` as the template to copy
+ - You may change template name or add description; make any custom changes to the template
+ - Press **Finish**
+
+### 7. Set Up Complete
+
+Now you may just go to the Solution Explorer, right-click and then **Add > New Project **. From there, find whatever you named the template from Step 6. It will create new project all set up.
+
 ---
 
 ## 📂 Current Projects
