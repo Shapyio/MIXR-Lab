@@ -1,0 +1,81 @@
+# mixr-projects
+
+This directory contains custom projects built on top of the [MIXR](https://github.com/Mixer-Sim/mixr) simulation framework. The setup process to create these projects was non-trivial and is documented below for future reference or reuse.
+
+---
+
+## 🛠 Project Setup Instructions
+
+Each new project in this directory (starting with `templateProject`) was configured using the following steps:
+
+### 1. **Base Structure**
+- Cloned the structure of `mixr-examples`.
+- Copied the `/lib` and `/share` directories from `mixr-examples` into the `mixr-projects` directory (may not be strictly necessary, but done for structural consistency).
+
+### 2. **Project Template**
+- Created a project named `templateProject` which acts as a base for new projects.
+- It contains a `main.cpp` file which replicates the Tutorial01 "Hello World" example from `mixr-examples`.
+
+### 3. **Project Configuration**
+
+Inside the Visual Studio project properties of `templateProject`:
+
+####   ➤ **C/C++ > General > Additional Include Directories**
+```
+
+../../mixr/include;../../mixr-3rdparty/include;%(AdditionalIncludeDirectories)
+
+```
+
+####   ➤ **Linker > General > Additional Library Directories**
+```
+
+../../mixr/lib;../../mixr-3rdparty/lib/vs2017-32;%(AdditionalLibraryDirectories)
+
+```
+
+####   ➤ **Linker > Input > Additional Dependencies**
+```
+
+mixr\_models\_d.lib;JSBSim\_d.lib;libzmq\_d.lib;mixr\_ighost\_cigi\_d.lib;mixr\_ighost\_pov\_d.lib;ccl\_lib\_d.lib;
+mixr\_interop\_dis\_d.lib;mixr\_interop\_d.lib;mixr\_simulation\_d.lib;mixr\_terrain\_d.lib;mixr\_ui\_glut\_d.lib;
+mixr\_instruments\_d.lib;mixr\_graphics\_d.lib;mixr\_base\_d.lib;ftgl\_d.lib;freetype2\_d.lib;freeglut\_d.lib;
+glu32.lib;opengl32.lib;Ws2\_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;iphlpapi.lib;%(AdditionalDependencies)
+
+````
+
+### 4. **Visual Studio Configuration**
+
+Inside the Visual Studio solution properties:
+
+####   ➤ **Configuration Properties**
+- Changed from `x64` to `Win32` under **Configuration Properties** to match the expected architecture of MIXR dependencies.
+
+### 5. **Build Helper Scripts**
+
+#### `make-edl.cmd` (inside the project folder)
+Used to generate `.edl` files from `.epp` files:
+```cmd
+::
+call ..\makedefs.cmd
+%mcpp% display.epp > test0.edl %EPPFLAGS%
+````
+
+#### `makedefs.cmd` (copied from `mixr-examples`)
+
+This script provides shared macro definitions and environment variable setups required by `make-edl.cmd`.
+
+---
+
+## 📂 Current Projects
+
+| Project Name | Description                                   |
+| ------------ | --------------------------------------------- |
+| *(None yet)* | *(Add projects below as I build them)* |
+
+---
+
+```
+
+No projects yet.
+```
