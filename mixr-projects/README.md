@@ -14,7 +14,7 @@ Each new project in this directory (starting with `templateProject`) was configu
 
 ### 2. **Project Template**
 - Created a project named `templateProject` which acts as a base for new projects.
-- It contains a `main.cpp` file which replicates the Tutorial01 "Hello World" example from `mixr-examples`.
+- It contains a `main.cpp` file which replicates the `tutorial01` "Hello World" example from `mixr-examples`.
 
 ### 3. **Project Configuration**
 
@@ -87,7 +87,7 @@ Now you may just go to the Solution Explorer, right-click and then **Add > New P
 
 | Project Name | Description                                   |
 | ------------ | --------------------------------------------- |
-| *(None yet)* | *(Add projects below as I build them)* |
+| demoShapes | Project demonstrating several basic shapes utilizing a display, pages, and graphics. |
 
 ---
 
