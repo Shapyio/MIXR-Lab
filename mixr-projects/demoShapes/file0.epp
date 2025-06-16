@@ -1,0 +1,73 @@
+( GlutDisplay
+
+    name: "Display"
+    color: red
+    fullScreen: false
+
+    left:       -15.0   // 30 degrees horizontal
+    right:       15.0
+
+    bottom:     -15.0   // and 30 degrees vertical
+    top:         15.0
+
+    near:        10.0
+    far:        -10.0
+
+    clearDepth: 1.0
+    clearColor: ( rgb 0 0 0 )
+
+    vpWidth:    1200
+    vpHeight:   1000
+
+    stdLineWidth: 2.0
+
+    page: p1
+    pages: {
+        p1: 
+            (Page
+                pagingEvent: {
+                    n: p2
+                    p: p3
+                }
+               components: {
+                ( Circle
+                    color: red
+                    radius: 2.0
+                    filled: true
+                    slices: 64
+                ) // circle
+            } // components
+        ) //p1
+        p2: 
+            (Page
+                pagingEvent: {
+                    n: p3
+                    p: p1
+                }
+                components: {
+                    ( Triangle
+                        color: blue
+                        vertices: {[0, 1] [0.5, 0] [-0.5, 0]}
+                    ) // Triangle
+                } // components
+            ) //p2
+        p3: 
+            (Page
+                pagingEvent: {
+                    n: p1
+                    p: p2
+                }
+                components: {
+                    ( Polygon
+                        color: white
+                        vertices: {
+                            [  1.5  1.5 ]
+                            [ -1.5  1.5 ]
+                            [ -1.5 -1.5 ]
+                            [  1.5 -1.5 ]
+                        }
+                    ) // poly
+                } // components
+            ) //p2
+    }
+) // glutDisplay
