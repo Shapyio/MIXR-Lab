@@ -1,10 +1,6 @@
 // OBJECTIVE:
-// Create my own demo of basic shapes. To navigate through pages use 'n' and 'p'. 
+// A simple boid simulation through a defined space. 
 //
-// TODO: Add ASCII text of navigation instructions
-// TODO: Separate pages into individual epp files that are shared by the main epp file.
-//
-
 #include "mixr/base/Pair.hpp"
 #include "mixr/base/Timers.hpp"
 #include "mixr/base/edl_parser.hpp"

@@ -1,4 +1,4 @@
-#line 1 "C:/Users/sagie/OneDrive/Documents/Code/Personal/MIXR/mixr_v18.01/mixr-projects/demoShapes/file0.epp"
+#line 1 "C:/Code/Personal/MIXR/mixr_v18.01/mixr-projects/demoShapes/file0.epp"
 ( GlutDisplay
 
     name: "Display"
@@ -22,6 +22,23 @@
 
     stdLineWidth: 2.0
 
+
+
+    normalFont: default
+    fonts: {
+      default:
+      ( BitmapFont
+          fontPosition: [ -9.5 9.5 ]
+          fontWidth: 0.462
+          fontHeight: 0.798
+          bitmapWidth: 11
+          bitmapHeight: 19
+          characterSpacing: 0.462
+          lineSpacing: 0.798
+          path: MIXR_DATA_FONT_11_19_PATH
+      )
+    }
+
     page: p1
     pages: {
         p1:
@@ -31,6 +48,11 @@
                     p: p3
                 }
                components: {
+               ( AsciiText
+                  color: white
+                  transform: ( Translation -10 -10.5 5 )
+                  text: "Press 'p' to page back, 'n' to page forward."
+                )
                 ( Circle
                     color: red
                     radius: 2.0
@@ -46,6 +68,11 @@
                     p: p1
                 }
                 components: {
+                    ( AsciiText
+                      color: white
+                      transform: ( Translation -10 -10.5 5 )
+                      text: "Press 'p' to page back, 'n' to page forward."
+                    )
                     ( Triangle
                         color: blue
                         vertices: {[0, 1] [0.5, 0] [-0.5, 0]}
@@ -59,6 +86,11 @@
                     p: p2
                 }
                 components: {
+                    ( AsciiText
+                      color: white
+                      transform: ( Translation -10 -10.5 5 )
+                      text: "Press 'p' to page back, 'n' to page forward."
+                    )
                     ( Polygon
                         color: white
                         vertices: {
