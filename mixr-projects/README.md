@@ -77,9 +77,11 @@ At the top, in Visual Studio, go to:
  - You may change template name or add description; make any custom changes to the template
  - Press **Finish**
 
+From here you may need to restart Visual Studio in order to see template. The template is useful but does not include the `file0.epp` or `make-edl.cmd` files. Those files need to be added manually (Sadly, until I find a way).
+
 ### 7. Set Up Complete
 
-Now you may just go to the Solution Explorer, right-click and then **Add > New Project **. From there, find whatever you named the template from Step 6. It will create new project all set up.
+Now you may just go to the Solution Explorer, right-click and then **Add > New Project**. From there, find whatever you named the template from Step 6. It will create new project all set up.
 
 ---
 
@@ -88,6 +90,7 @@ Now you may just go to the Solution Explorer, right-click and then **Add > New P
 | Project Name | Description                                   |
 | ------------ | --------------------------------------------- |
 | demoShapes | Project demonstrating several basic shapes utilizing a display, pages, and graphics. |
+| boidSimulation | Demonstration of a simple Boid simulation. Boids follow 3 rules to mimic flock behavior: Separation, Cohesion, and Alignment. |
 
 ---
 

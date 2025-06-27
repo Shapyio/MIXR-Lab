@@ -19,6 +19,8 @@
 #include <string>
 #include <cstdlib>
 
+#include "Boid.hpp"
+
 const int frameRate{ 20 };
 mixr::glut::GlutDisplay* glutDisplay{};
 
