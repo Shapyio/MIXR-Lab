@@ -138,11 +138,25 @@ void Boid::updateTC(const double dt)
   // Update base class data
   BaseClass::updateTC(dt);
 
+  if (allBoids == nullptr) {
+    std::cout << "Warning: allBoids pointer is nullptr!" << std::endl;
+  }
+  else if (allBoids->empty()) {
+    std::cout << "Warning: allBoids list is empty!" << std::endl;
+  }
+  else {
+    std::cout << "allBoids size: " << allBoids->size() << std::endl;
+  }
+
   // Calculate boid neighbors
   // Discover neighbors (within radius, but can implement k-nearest in future)
   if (allBoids != nullptr) {
+    std::cout << "Boid @" << this << " sees " << allBoids->size() << " total boids." << std::endl;
     neighbors = getNeighbors(*allBoids, 5.0);  // Radius = 5.0 units
+    std::cout << "Boid @" << this << " found " << neighbors.size() << " neighbors." << std::endl;
   }
+
+  std::cout << "Neighbors count for boid @" << this << ": " << neighbors.size() << std::endl;
 
   // Calculate boid velocity
   computeBoid(dt);
@@ -229,7 +243,11 @@ mixr::base::Vec2d Boid::computeCohesion(const std::vector<Boid*>& neighbors)
 
 void Boid::computeBoid(const double dt)
 {
-  if (neighbors.empty()) return;
+  //if (neighbors.empty()) return;
+  if (neighbors.empty()) {
+    std::cout << "Boid @" << this << " has no neighbors to compute behavior." << std::endl;
+    return;
+  }
 
   auto sep = computeSeparation(neighbors);
   auto ali = computeAlignment(neighbors);
@@ -255,6 +273,8 @@ std::vector<Boid*> Boid::getNeighbors(const std::vector<Boid*>& allBoids, double
     const double dy = b->yPos - yPos;
     const double distSq = dx * dx + dy * dy;
     if (distSq < radius * radius) {
+      std::cout << "Boid @" << this << " detected neighbor @" << b << " (dist^2=" << distSq << ")" << std::endl;
+
       neighbors.push_back(b);
     }
   }

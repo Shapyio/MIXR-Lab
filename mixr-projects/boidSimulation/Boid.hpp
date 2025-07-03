@@ -28,6 +28,9 @@ public:
   bool event(const int event, mixr::base::Object* const obj = nullptr) final;
   void reset() final;
 
+  // function for controller to set boid list
+  void setAllBoids(std::vector<Boid*>* list) { allBoids = list; }
+
 private:
   double left{ -10.0 }, right{ 10.0 };
   double bottom{ -10.0 }, top{ 10.0 };

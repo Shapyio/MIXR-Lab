@@ -2,6 +2,7 @@
 // A simple boid simulation through a defined space. 
 //
 #include "mixr/base/Pair.hpp"
+#include "mixr/base/PairStream.hpp"
 #include "mixr/base/Timers.hpp"
 #include "mixr/base/edl_parser.hpp"
 
@@ -39,7 +40,15 @@ void timerFunc(int)
 // our class factory
 mixr::base::Object* factory(const std::string& name)
 {
-  mixr::base::Object* obj{ mixr::glut::factory(name) };
+  mixr::base::Object* obj{};
+
+  // custom classes first
+  if (name == "Boid") {
+    obj = new Boid();
+  }
+
+  // default factories (if not custom)
+  if (obj == nullptr) obj = mixr::glut::factory(name);
   if (obj == nullptr) obj = mixr::graphics::factory(name);
   if (obj == nullptr) obj = mixr::base::factory(name);
 
@@ -80,6 +89,30 @@ mixr::glut::GlutDisplay* builder(const std::string& filename)
   return glutDisplay;
 }
 
+// --- Find all Boid components in the display and return them
+std::vector<Boid*> findAllBoids(mixr::glut::GlutDisplay* display)
+{
+  std::vector<Boid*> boids;
+
+  const auto* comps = display->getComponents();
+  if (comps == nullptr) return boids;
+
+  const auto* item = comps->getFirstItem();
+  while (item != nullptr) {
+    const auto* pair = static_cast<const mixr::base::Pair*>(item->getValue());
+    if (pair != nullptr) {
+      auto* obj = const_cast<mixr::base::Object*>(pair->object());
+      Boid* boid = dynamic_cast<Boid*>(obj);
+      if (boid != nullptr) {
+        boids.push_back(boid);
+      }
+    }
+    item = item->getNext();
+  }
+
+  return boids;
+}
+
 // Main
 int main(int argc, char* argv[])
 {
@@ -98,6 +131,12 @@ int main(int argc, char* argv[])
 
   // create a display window
   glutDisplay->createWindow();
+
+  // set up boid list (for boids to find each other)
+  auto boidList = findAllBoids(glutDisplay);
+  for (auto* b : boidList) {
+    b->setAllBoids(&boidList);
+  }
 
   // set timer
   const double dt{ 1.0 / static_cast<double>(frameRate) };

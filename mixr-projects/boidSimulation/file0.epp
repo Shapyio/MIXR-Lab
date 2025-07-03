@@ -47,59 +47,25 @@
                     p: p3
                 }
                components: {
-               ( AsciiText
-                  color: white
-                  transform: ( Translation -10 -10.5 5 )
-                  text: "Press 'p' to page back, 'n' to page forward."
+               ( Boid
+                    speed: 10.0                 // 1
+                    startAngle: 45              // 2
+                    separation: 10.0             // 3
+                    alignment: 10.0              // 4
+                    cohesion: 10.0               // 5
+                    separationMinDist: 0.5      // 6
+                    color: (rgb 1 0 0)          // 7
                 )
-                ( Circle
-                    color: red
-                    radius: 2.0
-                    filled: true
-                    slices: 64
-                ) // circle
+                ( Boid
+                    speed: 10.0                 // 1
+                    startAngle: 135             // 2
+                    separation: 10.0             // 3
+                    alignment: 10.0              // 4
+                    cohesion: 10.0               // 5
+                    separationMinDist: 0.1      // 6
+                    color: (rgb 0 1 0)          // 7
+                )
             } // components
         ) //p1
-        p2: 
-            (Page
-                pagingEvent: {
-                    n: p3
-                    p: p1
-                }
-                components: {
-                    ( AsciiText
-                      color: white
-                      transform: ( Translation -10 -10.5 5 )
-                      text: "Press 'p' to page back, 'n' to page forward."
-                    )
-                    ( Triangle
-                        color: blue
-                        vertices: {[0, 1] [0.5, 0] [-0.5, 0]}
-                    ) // Triangle
-                } // components
-            ) //p2
-        p3: 
-            (Page
-                pagingEvent: {
-                    n: p1
-                    p: p2
-                }
-                components: {
-                    ( AsciiText
-                      color: white
-                      transform: ( Translation -10 -10.5 5 )
-                      text: "Press 'p' to page back, 'n' to page forward."
-                    )
-                    ( Polygon
-                        color: white
-                        vertices: {
-                            [  1.5  1.5 ]
-                            [ -1.5  1.5 ]
-                            [ -1.5 -1.5 ]
-                            [  1.5 -1.5 ]
-                        }
-                    ) // poly
-                } // components
-            ) //p3
-    }
+    } //pages
 ) // glutDisplay

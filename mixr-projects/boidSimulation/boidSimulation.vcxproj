@@ -133,6 +133,9 @@
   <ItemGroup>
     <ClInclude Include="Boid.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="file0.epp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

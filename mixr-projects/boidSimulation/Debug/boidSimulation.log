@@ -1,2 +1,3 @@
 ﻿  main.cpp
+C:\Code\Personal\MIXR\mixr_v18.01\mixr-projects\boidSimulation\main.cpp(103,21): warning C4018: '<': signed/unsigned mismatch
   boidSimulation.vcxproj -> C:\Code\Personal\MIXR\mixr_v18.01\mixr-projects\build\Debug\boidSimulation.exe
