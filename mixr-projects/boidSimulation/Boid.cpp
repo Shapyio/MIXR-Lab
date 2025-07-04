@@ -153,10 +153,6 @@ void Boid::updateTC(const double dt)
   if (allBoids != nullptr) {
     std::cout << "Boid @" << this << " sees " << allBoids->size() << " total boids." << std::endl;
     neighbors = getNeighbors(*allBoids, 5.0);  // Radius = 5.0 units
-    std::cout << "Boid @" << this << " found " << neighbors.size() << " neighbors." << std::endl;
-  }
-
-  std::cout << "Neighbors count for boid @" << this << ": " << neighbors.size() << std::endl;
 
   // Calculate boid velocity
   computeBoid(dt);
