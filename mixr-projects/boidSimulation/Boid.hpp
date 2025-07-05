@@ -42,6 +42,7 @@ private:
   double alignmentWeight{ 1.0 };
   double cohesionWeight{ 1.0 };
   double separationMinDistance{ 0.1 };
+  double detectionRadius{5.0}; 
 
   const std::vector<Boid*>* allBoids{};  // Pointer to global list of all boids
   std::vector<Boid*> neighbors;           // Neighbors for this boid
@@ -60,10 +61,11 @@ private:
   bool setSlotCohesionWeight(const mixr::base::Number* const);
   bool setSlotSeparationMinDistance(const mixr::base::Number* const);
   bool setSlotColor(const mixr::base::Color* const);
+  bool setSlotDetectionRadius(const mixr::base::Number* const num);
 
   // Boid behavior functions
   void computeBoid(const double dt);
-  std::vector<Boid*> getNeighbors(const std::vector<Boid*>& allBoids, double radius = 5.0);
+  std::vector<Boid*> getNeighbors();
   mixr::base::Vec2d computeSeparation(const std::vector<Boid*>& neighbors);
   mixr::base::Vec2d computeAlignment(const std::vector<Boid*>& neighbors);
   mixr::base::Vec2d computeCohesion(const std::vector<Boid*>& neighbors);

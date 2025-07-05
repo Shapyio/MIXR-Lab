@@ -55,6 +55,7 @@
                     cohesion: 10.0               // 5
                     separationMinDist: 0.5      // 6
                     color: (rgb 1 0 0)          // 7
+                    detectionRadius: 5.0        // 8
                 )
                 ( Boid
                     speed: 10.0                 // 1
@@ -64,6 +65,7 @@
                     cohesion: 10.0               // 5
                     separationMinDist: 0.1      // 6
                     color: (rgb 0 1 0)          // 7
+                    detectionRadius: 5.0        // 8
                 )
             } // components
         ) //p1

@@ -4,6 +4,11 @@
 #include "mixr/base/numeric/Number.hpp"
 #include "mixr/base/colors/Color.hpp"
 
+// Boids call its parent (page) to recognize other objects nearby (TODO: Replace with controller)
+#include "mixr/graphics/Page.hpp"
+#include "mixr/base/PairStream.hpp"
+#include "mixr/base/Pair.hpp"
+
 #include <GL/glut.h>
 #include <cmath>
 
@@ -24,6 +29,7 @@ BEGIN_SLOTTABLE(Boid)
 "cohesion",               // 5
 "separationMinDist",      // 6
 "color",                  // 7
+"detectionRadius",        // 8
 END_SLOTTABLE(Boid)
 
 BEGIN_SLOT_MAP(Boid)
@@ -35,6 +41,7 @@ BEGIN_SLOT_MAP(Boid)
   ON_SLOT(5, setSlotCohesionWeight, mixr::base::Number)
   ON_SLOT(6, setSlotSeparationMinDistance, mixr::base::Number)
   ON_SLOT(7, setSlotColor, mixr::base::Color)
+  ON_SLOT(8, setSlotDetectionRadius, mixr::base::Number)
 END_SLOT_MAP()
 
 // --- Events ---
@@ -150,9 +157,8 @@ void Boid::updateTC(const double dt)
 
   // Calculate boid neighbors
   // Discover neighbors (within radius, but can implement k-nearest in future)
-  if (allBoids != nullptr) {
-    std::cout << "Boid @" << this << " sees " << allBoids->size() << " total boids." << std::endl;
-    neighbors = getNeighbors(*allBoids, 5.0);  // Radius = 5.0 units
+  if (allBoids != nullptr) 
+    neighbors = getNeighbors();  // default radius = 5.0 units
 
   // Calculate boid velocity
   computeBoid(dt);
@@ -260,17 +266,17 @@ void Boid::computeBoid(const double dt)
   }
 }
 
-std::vector<Boid*> Boid::getNeighbors(const std::vector<Boid*>& allBoids, double radius)
+std::vector<Boid*> Boid::getNeighbors()
 {
   std::vector<Boid*> neighbors;
-  for (Boid* b : allBoids) {
+  if (allBoids == nullptr) return neighbors;
+
+  for (Boid* b : *allBoids) {
     if (b == this) continue;
     const double dx = b->xPos - xPos;
     const double dy = b->yPos - yPos;
     const double distSq = dx * dx + dy * dy;
-    if (distSq < radius * radius) {
-      std::cout << "Boid @" << this << " detected neighbor @" << b << " (dist^2=" << distSq << ")" << std::endl;
-
+    if (distSq < detectionRadius * detectionRadius) {
       neighbors.push_back(b);
     }
   }
@@ -351,6 +357,15 @@ bool Boid::setSlotColor(const mixr::base::Color* const c)
     if (color != nullptr) { color->unref(); color = nullptr; }
     color = const_cast<mixr::base::Color*>(c);
     color->ref();
+    return true;
+  }
+  return false;
+}
+
+bool Boid::setSlotDetectionRadius(const mixr::base::Number* const num)
+{
+  if (num != nullptr) {
+    detectionRadius = num->getReal();
     return true;
   }
   return false;
