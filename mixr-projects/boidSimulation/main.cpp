@@ -7,7 +7,6 @@
 #include "mixr/base/edl_parser.hpp"
 
 #include "mixr/graphics/Graphic.hpp"
-
 #include "mixr/ui/glut/GlutDisplay.hpp"
 
 // factories

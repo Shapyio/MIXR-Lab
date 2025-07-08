@@ -23,25 +23,27 @@ EMPTY_DELETEDATA(Boid)
 // --- Slottable ---
 BEGIN_SLOTTABLE(Boid)
 "speed",                  // 1
-"startAngle",             // 2
-"separation",             // 3
-"alignment",              // 4
-"cohesion",               // 5
-"separationMinDist",      // 6
-"color",                  // 7
-"detectionRadius",        // 8
+"position",               // 2
+"startAngle",             // 3
+"separation",             // 4
+"alignment",              // 5
+"cohesion",               // 6
+"separationMinDist",      // 7
+"color",                  // 8
+"detectionRadius",        // 9
 END_SLOTTABLE(Boid)
 
 BEGIN_SLOT_MAP(Boid)
   ON_SLOT(1, setSlotSpeed, mixr::base::Number)
-  ON_SLOT(2, setSlotAngle, mixr::base::Angle)
-  ON_SLOT(2, setSlotAngle, mixr::base::Number)
-  ON_SLOT(3, setSlotSeparationWeight, mixr::base::Number)
-  ON_SLOT(4, setSlotAlignmentWeight, mixr::base::Number)
-  ON_SLOT(5, setSlotCohesionWeight, mixr::base::Number)
-  ON_SLOT(6, setSlotSeparationMinDistance, mixr::base::Number)
-  ON_SLOT(7, setSlotColor, mixr::base::Color)
-  ON_SLOT(8, setSlotDetectionRadius, mixr::base::Number)
+  ON_SLOT(2, setSlotPosition, mixr::base::List)
+  ON_SLOT(3, setSlotAngle, mixr::base::Angle)
+  ON_SLOT(3, setSlotAngle, mixr::base::Number)
+  ON_SLOT(4, setSlotSeparationWeight, mixr::base::Number)
+  ON_SLOT(5, setSlotAlignmentWeight, mixr::base::Number)
+  ON_SLOT(6, setSlotCohesionWeight, mixr::base::Number)
+  ON_SLOT(7, setSlotSeparationMinDistance, mixr::base::Number)
+  ON_SLOT(8, setSlotColor, mixr::base::Color)
+  ON_SLOT(9, setSlotDetectionRadius, mixr::base::Number)
 END_SLOT_MAP()
 
 // --- Events ---
@@ -93,9 +95,6 @@ void Boid::copyData(const Boid& org, const bool)
 
   // Copy neighbors (shallow copy of pointers)
   neighbors = org.neighbors;
-
-  // allBoids is not copied (to avoid cross-instance issues)
-  allBoids = nullptr;
 }
 
 void Boid::setStartAngle(const double deg)
@@ -145,20 +144,16 @@ void Boid::updateTC(const double dt)
   // Update base class data
   BaseClass::updateTC(dt);
 
-  if (allBoids == nullptr) {
-    std::cout << "Warning: allBoids pointer is nullptr!" << std::endl;
-  }
-  else if (allBoids->empty()) {
-    std::cout << "Warning: allBoids list is empty!" << std::endl;
-  }
-  else {
-    std::cout << "allBoids size: " << allBoids->size() << std::endl;
-  }
+  updateVision();  // detect all nearby objects
 
   // Calculate boid neighbors
-  // Discover neighbors (within radius, but can implement k-nearest in future)
-  if (allBoids != nullptr) 
-    neighbors = getNeighbors();  // default radius = 5.0 units
+  neighbors.clear();
+  for (auto* obj : visibleObjects) {
+    auto* b = dynamic_cast<Boid*>(obj);
+    if (b != nullptr && b != this) {
+      neighbors.push_back(b);
+    }
+  }
 
   // Calculate boid velocity
   computeBoid(dt);
@@ -167,11 +162,12 @@ void Boid::updateTC(const double dt)
   xPos += dx * dt;
   yPos += dy * dt;
 
-  // Wrap around
-  if (xPos > right) xPos = left;
-  else if (xPos < left) xPos = right;
-  if (yPos > top) yPos = bottom;
-  else if (yPos < bottom) yPos = top;
+  // Clamp to screen bounds (optional: allow small margin)
+  const double margin = 1.0;
+  if (xPos < left + margin) xPos = left + margin;
+  if (xPos > right - margin) xPos = right - margin;
+  if (yPos < bottom + margin) yPos = bottom + margin;
+  if (yPos > top - margin) yPos = top - margin;
 }
 
 void Boid::updateData(const double dt)
@@ -245,42 +241,92 @@ mixr::base::Vec2d Boid::computeCohesion(const std::vector<Boid*>& neighbors)
 
 void Boid::computeBoid(const double dt)
 {
-  //if (neighbors.empty()) return;
-  if (neighbors.empty()) {
-    std::cout << "Boid @" << this << " has no neighbors to compute behavior." << std::endl;
-    return;
-  }
+  if (neighbors.empty()) return;
 
+  // Boid rules
   auto sep = computeSeparation(neighbors);
   auto ali = computeAlignment(neighbors);
   auto coh = computeCohesion(neighbors);
 
-  dx = sep.x() * separationWeight + ali.x() * alignmentWeight + coh.x() * cohesionWeight;
-  dy = sep.y() * separationWeight + ali.y() * alignmentWeight + coh.y() * cohesionWeight;
+  // Combine rule-based steering
+  double steerX = sep.x() * separationWeight + ali.x() * alignmentWeight + coh.x() * cohesionWeight;
+  double steerY = sep.y() * separationWeight + ali.y() * alignmentWeight + coh.y() * cohesionWeight;
 
-  // Normalize to speed
-  const double mag = std::sqrt(dx * dx + dy * dy);
-  if (mag > 0) {
-    dx = (dx / mag) * speed;
-    dy = (dy / mag) * speed;
+  // Wall avoidance 
+  mixr::base::Vec2d wallForce;
+  const double avoidDist = 15.0;       // Distance threshold to start avoiding walls
+  const double wallStrength = 6;     // Strength of wall steering
+
+  // Left wall
+  if (xPos - left < avoidDist) wallForce += mixr::base::Vec2d(1.0, 0.0) * (1.0 - (xPos - left) / avoidDist);
+  // Right wall
+  if (right - xPos < avoidDist) wallForce += mixr::base::Vec2d(-1.0, 0.0) * (1.0 - (right - xPos) / avoidDist);
+  // Bottom wall
+  if (yPos - bottom < avoidDist) wallForce += mixr::base::Vec2d(0.0, 1.0) * (1.0 - (yPos - bottom) / avoidDist);
+  // Top wall
+  if (top - yPos < avoidDist) wallForce += mixr::base::Vec2d(0.0, -1.0) * (1.0 - (top - yPos) / avoidDist);
+
+  // Apply wall steering to main steering vector
+  steerX += wallForce.x() * wallStrength;
+  steerY += wallForce.y() * wallStrength;
+
+  // Normalize steering direction
+  double steerMag = std::sqrt(steerX * steerX + steerY * steerY);
+  if (steerMag > 0.0001) {
+    steerX /= steerMag;
+    steerY /= steerMag;
   }
+
+  // Normalize current velocity
+  const double currMag = std::sqrt(dx * dx + dy * dy);
+  if (currMag == 0.0) return;
+
+  double ndx = dx / currMag;
+  double ndy = dy / currMag;
+
+  // Smooth turning toward steer direction
+  const double steeringStrength = 0.1;  // Lower value = smoother
+  ndx += steerX * steeringStrength;
+  ndy += steerY * steeringStrength;
+
+  // Re-normalize to maintain constant speed
+  const double newMag = std::sqrt(ndx * ndx + ndy * ndy);
+  dx = (ndx / newMag) * speed;
+  dy = (ndy / newMag) * speed;
 }
 
-std::vector<Boid*> Boid::getNeighbors()
-{
-  std::vector<Boid*> neighbors;
-  if (allBoids == nullptr) return neighbors;
 
-  for (Boid* b : *allBoids) {
-    if (b == this) continue;
-    const double dx = b->xPos - xPos;
-    const double dy = b->yPos - yPos;
-    const double distSq = dx * dx + dy * dy;
-    if (distSq < detectionRadius * detectionRadius) {
-      neighbors.push_back(b);
+void Boid::updateVision()
+{
+  visibleObjects.clear();
+
+  // Use getParent(), then cast to Page
+  auto* parentPage = dynamic_cast<mixr::graphics::Page*>(this->container());
+  if (parentPage == nullptr) {
+    std::cerr << "Boid @" << this << " has no valid parent Page!" << std::endl;
+    return;
+  }
+
+  const auto* comps = parentPage->getComponents();
+  if (comps == nullptr) return;
+
+  for (const auto* item = comps->getFirstItem(); item != nullptr; item = item->getNext()) {
+    const auto* pair = static_cast<const mixr::base::Pair*>(item->getValue());
+    auto* obj = const_cast<mixr::base::Object*>(pair->object());
+
+    if (obj == this) continue; // skip self
+
+    if (auto* b = dynamic_cast<Boid*>(obj)) {
+      if (b == this) continue; // Skip self
+      const double dx = b->xPos - xPos;
+      const double dy = b->yPos - yPos;
+      const double distSq = dx * dx + dy * dy;
+
+      if (distSq <= detectionRadius * detectionRadius) {
+        visibleObjects.push_back(b);
+      }
     }
   }
-  return neighbors;
 }
 
 // --- Slot Setters ---
@@ -288,6 +334,23 @@ bool Boid::setSlotSpeed(const mixr::base::Number* const num)
 {
   if (num != nullptr) {
     setSpeed(num->getReal());
+    return true;
+  }
+  return false;
+}
+
+bool Boid::setSlotPosition(const mixr::base::List* const list)
+{
+  if (list == nullptr || list->entries() < 2) return false;
+
+  double x{}, y{};
+  const auto* px = dynamic_cast<const mixr::base::Number*>(list->getPosition(1));
+  const auto* py = dynamic_cast<const mixr::base::Number*>(list->getPosition(2));
+  if (px && py) {
+    x = px->getReal();
+    y = py->getReal();
+    xPos = x;
+    yPos = y;
     return true;
   }
   return false;

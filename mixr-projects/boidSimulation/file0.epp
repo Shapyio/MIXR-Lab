@@ -49,23 +49,80 @@
                components: {
                ( Boid
                     speed: 10.0                 // 1
-                    startAngle: 45              // 2
-                    separation: 10.0             // 3
-                    alignment: 10.0              // 4
-                    cohesion: 10.0               // 5
-                    separationMinDist: 0.5      // 6
-                    color: (rgb 1 0 0)          // 7
-                    detectionRadius: 5.0        // 8
+                    position: [ 5.0 5.0 ]  // 2
+                    startAngle: 45              // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.2      // 7
+                    color: (rgb 1 0 0)          // 8
+                    detectionRadius: 5.0        // 9
                 )
                 ( Boid
                     speed: 10.0                 // 1
-                    startAngle: 135             // 2
-                    separation: 10.0             // 3
-                    alignment: 10.0              // 4
-                    cohesion: 10.0               // 5
-                    separationMinDist: 0.1      // 6
-                    color: (rgb 0 1 0)          // 7
-                    detectionRadius: 5.0        // 8
+                    position: [ -5.0 -5.0 ]  // 2
+                    startAngle: 135             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.4      // 7
+                    color: (rgb 0 1 0)          // 8
+                    detectionRadius: 5.0        // 9
+                )
+                ( Boid
+                    speed: 10.0                 // 1
+                    position: [ 3.0 -7.0 ]  // 2
+                    startAngle: 140             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.2      // 7
+                    color: (rgb 0 0 1)          // 8
+                    detectionRadius: 5.0        // 9
+                )
+                ( Boid
+                    speed: 10.0                 // 1
+                    position: [ 10.0 1.0 ]  // 2
+                    startAngle: 75             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.4      // 7
+                    color: (rgb 1 1 0)          // 8
+                    detectionRadius: 5.0        // 9
+                )
+                ( Boid
+                    speed: 10.0                 // 1
+                    position: [ 7.0 -4.0 ]  // 2
+                    startAngle: 140             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.3      // 7
+                    color: (rgb 1 1 1)          // 8
+                    detectionRadius: 5.0        // 9
+                )
+                ( Boid
+                    speed: 10.0                 // 1
+                    position: [ 12.0 3.0 ]  // 2
+                    startAngle: 10             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.4      // 7
+                    color: (rgb 0.5 1 0.5)          // 8
+                    detectionRadius: 5.0        // 9
+                )
+                ( Boid
+                    speed: 10.0                 // 1
+                    position: [ 2.0 13.0 ]  // 2
+                    startAngle: 120             // 3
+                    separation: 5.0            // 4
+                    alignment: 5.0             // 5
+                    cohesion: 5.0              // 6
+                    separationMinDist: 0.2      // 7
+                    color: (rgb 0.2 0.2 0.3)          // 8
+                    detectionRadius: 5.0        // 9
                 )
             } // components
         ) //p1

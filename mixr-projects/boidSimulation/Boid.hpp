@@ -2,6 +2,7 @@
 #define __Boid_H__
 
 #include "mixr/graphics/Graphic.hpp"
+#include "mixr/base/List.hpp"
 #include "vector"
 
 namespace mixr {
@@ -20,7 +21,6 @@ public:
 
   void setStartAngle(const double deg);
   void setSpeed(const double s);
-  void setAllBoids(const std::vector<Boid*>* list) { allBoids = list; } // set list of boids
 
   void drawFunc() final;
   void updateTC(const double dt = 0.0) final;
@@ -28,14 +28,11 @@ public:
   bool event(const int event, mixr::base::Object* const obj = nullptr) final;
   void reset() final;
 
-  // function for controller to set boid list
-  void setAllBoids(std::vector<Boid*>* list) { allBoids = list; }
-
 private:
-  double left{ -10.0 }, right{ 10.0 };
-  double bottom{ -10.0 }, top{ 10.0 };
-  double xPos{}, yPos{};
-  double dx{}, dy{};
+  double left{ -15.0 }, right{ 15.0 };   // screen borders
+  double bottom{ -15.0 }, top{ 15.0 };
+  double xPos{}, yPos{};                  // boid position
+  double dx{}, dy{};                      // boid velocity
   double speed{ 10.0 };
   double sangle{};
   double separationWeight{ 1.5 };
@@ -44,7 +41,7 @@ private:
   double separationMinDistance{ 0.1 };
   double detectionRadius{5.0}; 
 
-  const std::vector<Boid*>* allBoids{};  // Pointer to global list of all boids
+  std::vector<mixr::base::Object*> visibleObjects; // currently seen objects
   std::vector<Boid*> neighbors;           // Neighbors for this boid
 
   const mixr::base::Angle* iangle{};  // for cloneable slot storage
@@ -54,6 +51,7 @@ private:
 
   // Slot table helpers
   bool setSlotSpeed(const mixr::base::Number* const);
+  bool setSlotPosition(const mixr::base::List* const list);
   bool setSlotAngle(const mixr::base::Angle* const);
   bool setSlotAngle(const mixr::base::Number* const);
   bool setSlotSeparationWeight(const mixr::base::Number* const);
@@ -65,7 +63,7 @@ private:
 
   // Boid behavior functions
   void computeBoid(const double dt);
-  std::vector<Boid*> getNeighbors();
+  void updateVision();
   mixr::base::Vec2d computeSeparation(const std::vector<Boid*>& neighbors);
   mixr::base::Vec2d computeAlignment(const std::vector<Boid*>& neighbors);
   mixr::base::Vec2d computeCohesion(const std::vector<Boid*>& neighbors);
