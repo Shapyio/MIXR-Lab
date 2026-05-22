@@ -50,21 +50,80 @@
                components: {
                ( Boid
                     speed: 10.0
-                    startAngle: 45
-                    separation: 10.0
-                    alignment: 10.0
-                    cohesion: 10.0
-                    separationMinDist: 0.5
+                    position: [ 5.0 5.0 ]
+                    startAngle: 235
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.2
                     color: (rgb 1 0 0)
+                    detectionRadius: 5.0
                 )
                 ( Boid
                     speed: 10.0
-                    startAngle: 135
-                    separation: 10.0
-                    alignment: 10.0
-                    cohesion: 10.0
-                    separationMinDist: 0.1
+                    position: [ -5.0 -5.0 ]
+                    startAngle: 90
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.4
                     color: (rgb 0 1 0)
+                    detectionRadius: 5.0
+                )
+                ( Boid
+                    speed: 10.0
+                    position: [ 3.0 -7.0 ]
+                    startAngle: 135
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.2
+                    color: (rgb 0 0 1)
+                    detectionRadius: 5.0
+                )
+                ( Boid
+                    speed: 10.0
+                    position: [ -10.0 1.0 ]
+                    startAngle: 35
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.4
+                    color: (rgb 1 1 0)
+                    detectionRadius: 5.0
+                )
+                ( Boid
+                    speed: 10.0
+                    position: [ 7.0 -4.0 ]
+                    startAngle: 150
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.3
+                    color: (rgb 1 1 1)
+                    detectionRadius: 5.0
+                )
+                ( Boid
+                    speed: 10.0
+                    position: [ 12.0 3.0 ]
+                    startAngle: 160
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.4
+                    color: (rgb 0.5 1 0.5)
+                    detectionRadius: 5.0
+                )
+                ( Boid
+                    speed: 10.0
+                    position: [ 2.0 13.0 ]
+                    startAngle: 290
+                    separation: 5.0
+                    alignment: 5.0
+                    cohesion: 5.0
+                    separationMinDist: 0.2
+                    color: (rgb 0.2 0.2 0.3)
+                    detectionRadius: 5.0
                 )
             }
         )
