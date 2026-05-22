@@ -254,8 +254,8 @@ void Boid::computeBoid(const double dt)
 
   // Wall avoidance 
   mixr::base::Vec2d wallForce;
-  const double avoidDist = 15.0;       // Distance threshold to start avoiding walls
-  const double wallStrength = 6;     // Strength of wall steering
+  const double avoidDist = 10.0;       // Distance threshold to start avoiding walls
+  const double wallStrength = 30;     // Strength of wall steering
 
   // Left wall
   if (xPos - left < avoidDist) wallForce += mixr::base::Vec2d(1.0, 0.0) * (1.0 - (xPos - left) / avoidDist);

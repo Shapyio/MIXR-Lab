@@ -51,7 +51,7 @@
                ( Boid
                     speed: 10.0
                     position: [ 5.0 5.0 ]
-                    startAngle: 45
+                    startAngle: 235
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -62,7 +62,7 @@
                 ( Boid
                     speed: 10.0
                     position: [ -5.0 -5.0 ]
-                    startAngle: 135
+                    startAngle: 90
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -73,7 +73,7 @@
                 ( Boid
                     speed: 10.0
                     position: [ 3.0 -7.0 ]
-                    startAngle: 140
+                    startAngle: 135
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -83,8 +83,8 @@
                 )
                 ( Boid
                     speed: 10.0
-                    position: [ 10.0 1.0 ]
-                    startAngle: 75
+                    position: [ -10.0 1.0 ]
+                    startAngle: 35
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -95,7 +95,7 @@
                 ( Boid
                     speed: 10.0
                     position: [ 7.0 -4.0 ]
-                    startAngle: 140
+                    startAngle: 150
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -106,7 +106,7 @@
                 ( Boid
                     speed: 10.0
                     position: [ 12.0 3.0 ]
-                    startAngle: 10
+                    startAngle: 160
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
@@ -117,7 +117,7 @@
                 ( Boid
                     speed: 10.0
                     position: [ 2.0 13.0 ]
-                    startAngle: 120
+                    startAngle: 290
                     separation: 5.0
                     alignment: 5.0
                     cohesion: 5.0
